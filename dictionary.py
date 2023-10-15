@@ -13,25 +13,43 @@ for key in phones:
   "email": "johndoe@example.com"
 }"""
 
-dictionary={}
-commands=["new","show"]
+import json
+from pathlib import Path
+
+path=Path("phones.json")
+
+if path.exists():
+    f=open("phones.json","r")
+    phones=json.load(f)
+    f.close()
+else:
+    phones={}
+
+commands = [
+    "new_contact", "show_contacts"
+]
 while True:
-    command= input(f"peek an option:{commands}")
-    while command not in command:
-        print("unknown command, try again")
-        command=input(f"peek an option:{command}")
-    if command=="new_contact" or "n":
-        name_sur=(input("your name_surnate:"))
-        age=(input("your age:"))
-        dictionary[name_sur]=age
+    command = input(f"Peek an option: {commands} ")
+    while command not in commands:
+        print("Unknown command, try again")
+        command = input(f"Peek an option: {commands} ")
 
-    elif command=="show_contacts" or "s":
-        print(dictionary)
-    #else:
-    #    print("unknown command")
+    if command == "new_contact":
+        full_name = input("Input full name: ")
+        phone_num = input("Input phone number: ")
+        phones[full_name] = phone_num
+    elif command == "show_contacts":
+        print(phones)
 
-    command=input("want continue? Y/N?")
-    if command=="N" or "n":
+    answer = input("Do you want to continue Y/N? ")
+    while answer.lower() not in ["y", "n"]:
+        print("Choose Y or N only")
+        answer = input("Do you want to continue Y/N? ")
+
+    if answer.lower() == "n":
+        f = open("phones.json", "w")
+        json.dump(phones, f)
+        f.close()
         break
 
 
