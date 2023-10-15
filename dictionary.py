@@ -14,14 +14,18 @@ for key in phones:
 }"""
 
 dictionary={}
+commands=["new","show"]
 while True:
-    command= input("peek an option: new_contact, show_contacts")
-    if command=="new_contact":
+    command= input(f"peek an option:{commands}")
+    while command not in command:
+        print("unknown command, try again")
+        command=input(f"peek an option:{command}")
+    if command=="new_contact" or "n":
         name_sur=(input("your name_surnate:"))
         age=(input("your age:"))
         dictionary[name_sur]=age
 
-    elif command=="show_contacts":
+    elif command=="show_contacts" or "s":
         print(dictionary)
     #else:
     #    print("unknown command")
@@ -29,4 +33,5 @@ while True:
     command=input("want continue? Y/N?")
     if command=="N" or "n":
         break
+
 
